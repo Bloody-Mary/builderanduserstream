@@ -20,7 +20,10 @@ public class User {
         private int age;
 
         public Builder() {
+            this.id = 0L;
+            this.login = "";
             this.password = new StringBuilder();
+            this.age = 0;
         }
 
         public Builder setId (Long id) {
@@ -30,6 +33,11 @@ public class User {
 
         public Builder setLogin(String login) {
             this.login = login;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = new StringBuilder(password);
             return this;
         }
 
@@ -57,5 +65,14 @@ public class User {
 
     public int getAge() {
         return age;
+    }
+
+    @Override
+    public String toString() {
+        return "User" +
+                "id = " + id +
+                ", login = " + login +
+                ", password = " + password.toString() +
+                ", age = " + age;
     }
 }
