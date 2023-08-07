@@ -1,7 +1,6 @@
 package ru.babushkina.userstreamapp.mvc.view;
 
 import ru.babushkina.userstreamapp.mvc.model.entity.User;
-
 import java.util.List;
 
 public class UserView {

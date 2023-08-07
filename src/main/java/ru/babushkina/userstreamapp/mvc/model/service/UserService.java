@@ -1,7 +1,6 @@
 package ru.babushkina.userstreamapp.mvc.model.service;
 
 import ru.babushkina.userstreamapp.mvc.model.entity.User;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,17 +15,14 @@ public class UserService {
     private List<User> generateRandomUsers(int count) {
         List<User> users = new ArrayList<>();
         Random random = new Random();
-
         for (int i = 0; i < count; i++) {
             Long id = (long) (random.nextInt(100) + 1);
             String login = generateRandomString(random.nextInt(16) + 5);
             StringBuilder password = new StringBuilder(generateRandomString(random.nextInt(16) + 5));
             int age = random.nextInt(50) + 18;
-
             User user = new User(id, login, password, age);
             users.add(user);
         }
-
         return users;
     }
 

@@ -70,7 +70,6 @@ public class User {
             this.age = age;
             return this;
         }
-
         public User build() {
             return new User(id, login, password, age);
         }
