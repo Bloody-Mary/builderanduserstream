@@ -79,10 +79,10 @@ public class User {
     @Override
     public String toString() {
         return "Пользователь: " +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", age=" + age;
+                "id = " + id +
+                ", логин = '" + login + '\'' +
+                ", пароль = '" + password + '\'' +
+                ", возраст = " + age;
     }
 }
 
