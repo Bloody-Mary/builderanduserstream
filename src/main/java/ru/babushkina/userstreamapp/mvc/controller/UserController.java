@@ -17,7 +17,8 @@ public class UserController {
     }
 
     public void request1() {
-        Stream<User> userStream = userService.generateInitializedUserStream(20);
+        Stream<User> userEmptyStream = userService.generateEmptyUsers(20);
+        Stream<User> userStream = userService.initializedUsers(userEmptyStream);
         List<User> userStreamList = userStream.collect(Collectors.toList());
         List<User> sortedUsers = userService.processSortedUsers(userStreamList.stream());
         view.displaySortedUsers(sortedUsers);

@@ -16,14 +16,12 @@ public class UserService {
         return emptyUsers.stream();
     }
 
-    public Stream<User> generateInitializedUserStream (int count) {
-        return generateEmptyUsers(count)
-                .map(user -> new User.Builder()
-                        .setLogin(generateRandomString(5, 20))
-                        .setPassword(new StringBuilder(generateRandomString(5, 20)))
-                        .setAge(new Random().nextInt(50))
-                        .build())
-                        .limit(count);
+    public Stream<User> initializedUsers (Stream<User> userStream) {
+        return userStream.map(user -> new User.Builder()
+                .setLogin(generateRandomString(5, 20))
+                .setPassword(new StringBuilder(generateRandomString(5, 20)))
+                .setAge(new Random().nextInt(50))
+                .build());
     }
 
     public String generateRandomString(int minLength, int maxLength) {
