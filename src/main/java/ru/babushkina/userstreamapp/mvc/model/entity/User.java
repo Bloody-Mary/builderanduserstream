@@ -50,11 +50,7 @@ public class User {
         private String login;
         private StringBuilder password;
         private int age;
-
-        public Builder setId(Long id) {
-            this.id = id;
-            return this;
-        }
+        private  static long counter = 0;
 
         public Builder setLogin(String login) {
             this.login = login;
@@ -71,7 +67,12 @@ public class User {
             return this;
         }
         public User build() {
+            this.id = generateId();
             return new User(id, login, password, age);
+        }
+
+        private static synchronized long generateId() {
+            return ++counter;
         }
     }
 

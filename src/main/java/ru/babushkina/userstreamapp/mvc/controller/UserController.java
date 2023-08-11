@@ -17,27 +17,11 @@ public class UserController {
     }
 
     public void request1() {
-        Stream<User> userStream = userService.generateUserStream(20);
-        Stream<User> streamResult = processUserStream(userStream);
-        List<User> sortedUsers = processSortedUsers(streamResult);
+        Stream<User> userStream = userService.generateInitializedUserStream(20);
+        List<User> userStreamList = userStream.collect(Collectors.toList());
+        List<User> sortedUsers = userService.processSortedUsers(userStreamList.stream());
         view.displaySortedUsers(sortedUsers);
-        boolean hasUserWithMatchingAge = checkMatchingAge();
+        boolean hasUserWithMatchingAge = userService.checkMatchingAge(sortedUsers.stream());
         view.displayMatchingAge(hasUserWithMatchingAge);
-    }
-
-    private Stream<User> processUserStream(Stream<User> userStream) {
-        return userStream;
-    }
-
-    private List<User> processSortedUsers(Stream<User> userStream) {
-        return userStream
-                .sorted((u1, u2) -> Integer.compare(u2.getAge(), u1.getAge()))
-                .collect(Collectors.toList());
-    }
-
-    private boolean checkMatchingAge() {
-        UserService userService = new UserService();
-        Stream<User> userStream = userService.generateUserStream(20);
-        return userStream.anyMatch(user -> user.getAge() == user.getId());
     }
 }

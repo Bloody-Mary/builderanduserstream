@@ -4,38 +4,49 @@ import ru.babushkina.userstreamapp.mvc.model.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class UserService {
-    public Stream<User> generateUserStream(int count) {
-        List<User> users = generateRandomUsers(count);
-        return users.stream();
-    }
-
-    private List<User> generateRandomUsers(int count) {
-        List<User> users = new ArrayList<>();
-        Random random = new Random();
+    public Stream<User> generateEmptyUsers (int count) {
+        List<User> emptyUsers = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            Long id = (long) (random.nextInt(100) + 1);
-            String login = generateRandomString(random.nextInt(16) + 5);
-            StringBuilder password = new StringBuilder(generateRandomString(random.nextInt(16) + 5));
-            int age = random.nextInt(50) + 18;
-            User user = new User(id, login, password, age);
-            users.add(user);
+            emptyUsers.add(new User(null, "", new StringBuilder(), 0));
         }
-        return users;
+        return emptyUsers.stream();
     }
 
-    private String generateRandomString(int length) {
+    public Stream<User> generateInitializedUserStream (int count) {
+        return generateEmptyUsers(count)
+                .map(user -> new User.Builder()
+                        .setLogin(generateRandomString(5, 20))
+                        .setPassword(new StringBuilder(generateRandomString(5, 20)))
+                        .setAge(new Random().nextInt(50))
+                        .build())
+                        .limit(count);
+    }
+
+    public String generateRandomString(int minLength, int maxLength) {
         String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder sb = new StringBuilder(length);
+        StringBuilder sb = new StringBuilder();
         Random random = new Random();
+        int length = random.nextInt(maxLength - minLength + 1) + minLength;
         for (int i = 0; i < length; i++) {
             int index = random.nextInt(alphabet.length());
             char randomChar = alphabet.charAt(index);
             sb.append(randomChar);
         }
         return sb.toString();
+    }
+
+    public List<User> processSortedUsers(Stream<User> userStream) {
+        return userStream
+                .sorted((u1, u2) -> Integer.compare(u2.getAge(), u1.getAge()))
+                .collect(Collectors.toList());
+    }
+
+    public boolean checkMatchingAge(Stream<User> userStream) {
+        return userStream.anyMatch(user -> user.getAge() == user.getId());
     }
 }
 
