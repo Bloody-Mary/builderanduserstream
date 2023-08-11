@@ -1,4 +1,4 @@
-package ru.babushkina.userstreamapp._main;
+package ru.babushkina.userstreamapp.mvc._main;
 
 import ru.babushkina.userstreamapp.mvc.controller.UserController;
 
